@@ -4,7 +4,7 @@
 
 
 int main(){
-    const char *command = "git log --after=\"today 00:00\" --before=\"tomorrow 00:00\"";
+    const char *command = "git log --since=\"yesterday\"";
 
 
     FILE *fp;
@@ -21,6 +21,12 @@ int main(){
         break;
     }
 
+
+        // Close the command stream
+    if (pclose(fp) == -1) {
+        perror("pclose failed");
+        return 1;
+    }
 
     if (command_check){
         printf("good\n");
