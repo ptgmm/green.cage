@@ -1,48 +1,39 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-
+#include <time.h>
 
 int main(){
     const char *command = "git log --since=\"yesterday\"";
-    int i;
-    char domain[50];
+    int command_check;
+    char result[256];
+
     FILE *fp;
     fp = popen(command, "r");
     if (fp == NULL){
         perror("Error");
     }
+
     
-    char result[256];
-    int command_check;
+    time_t start_time, current_time;
+    double elapsed_time;
+    time(&start_time);
+    int i;
+    char domain[50];
 
     while(1){
-        if (command_check == 1){
-            printf("good\n");
+        time(&current_time);
+        elapsed_time = difftime(current_time, start_time);
+        if (elapsed_time >= 10.0){
+            while (fgets(result, sizeof(result), fp) != NULL){
+                command_check = 1;
+                printf("good\n");
+                break;
+            }
+            start_time = current_time;
             break;
         }
-/*        } else{
-            FILE *hostlist = fopen("/etc/hosts", "a");
-    
-            printf("Enter a domain: ");
-            scanf("%24s", domain);
-
-            fprintf(hostlist, "127.0.0.1    %s\n", domain);
-            fclose(hostlist); 
-        }*/
-
     }
-
-
-    if (pclose(fp) == -1) {
-        perror("pclose failed");
-        return 1;
-    }
-
-         
-
-
 
     return 0;
 }
