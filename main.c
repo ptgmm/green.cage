@@ -14,7 +14,6 @@ int main(){
         perror("Error");
     }
 
-    
     time_t start_time, current_time;
     double elapsed_time;
     time(&start_time);
@@ -27,8 +26,12 @@ int main(){
         if (elapsed_time >= 10.0){
             while (fgets(result, sizeof(result), fp) != NULL){
                 command_check = 1;
-                printf("good\n");
-                break;
+                FILE *hostlist = fopen("/etc/hosts", "w");
+                fprintf(hostlist, "//");
+            }
+            while (fgets(result, sizeof(result), fp) == NULL){
+                FILE *hostlist = fopen("/etc/hosts", "a");
+                fprintf(hostlist, "127.0.0.1    example.com\n");
             }
             start_time = current_time;
             break;
