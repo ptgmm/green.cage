@@ -24,12 +24,12 @@ int main(){
         time(&current_time);
         elapsed_time = difftime(current_time, start_time);
         if (elapsed_time >= 10.0){
-            for (char result[256]; fgets(result, sizeof(result), fp) != NULL; ) {
+            for (char result[256]; fgets(result, sizeof(result), fp) == NULL; ) {
                 FILE *hostlist = fopen("/etc/hosts", "a");
                 fprintf(hostlist, "\n127.0.0.1    example.com\n");
                 break;
             }
-            for (char result[256]; fgets(result, sizeof(result), fp) == NULL; ) {
+            for (char result[256]; fgets(result, sizeof(result), fp) != NULL; ) {
                 command_check = 1;
                 FILE *hostlist = fopen("/etc/hosts", "w");
                 fprintf(hostlist, "//");
